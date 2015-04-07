@@ -18,10 +18,10 @@ function create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
 
     game.physics.p2.gravity.y = 100;
-
     //  Add a sprite
-    player = game.add.sprite(122, 148, 'astronot');
+    player = game.add.sprite(114, 132, 'astronot');
     game.physics.p2.enable(player);
+    player.body.bounce = .2;
 
     var spriteMaterial = game.physics.p2.createMaterial('spriteMaterial', player.body);
 
@@ -31,8 +31,9 @@ function create() {
 
     contactMaterial.friction = 0.3;
     contactMaterial.restitution = 1.0;
-
+    contactMaterial.maxAngular = 0;
     contactMaterial.stiffness = 1e7;
+    contactMaterial.bounce = .3;
     contactMaterial.relaxation = 3;
     contactMaterial.frictionStiffness = 1e7;
     contactMaterial.frictionRelaxation = 3;
@@ -54,17 +55,16 @@ function create() {
 function update() {
 
     if (cursors.left.isDown) {
-        player.body.moveLeft(200);
+        player.body.moveLeft(100);
         player.scale.x = -1;
     } else if (cursors.right.isDown) {
-        player.body.moveRight(200);
+        player.body.move
+        player.body.moveRight(100);
         player.scale.x = 1;
     }
 
     if (cursors.up.isDown) {
-        player.body.moveUp(200);
-    } else if (cursors.down.isDown) {
-        player.body.moveDown(200);
+        player.body.moveUp(50);
     }
 
     if( fireButton.isDown) {
@@ -81,7 +81,7 @@ function fire () {
 
         if (bullet)
         {
-            bullet.reset(player.x+75*player.scale.x , player.y );
+            bullet.reset(player.x+70*player.scale.x , player.y );
             bullet.body.velocity.x = 400 * player.scale.x;
             bulletTime = game.time.now + 200;
         }
